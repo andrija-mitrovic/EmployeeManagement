@@ -3,9 +3,28 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{65F6EA9E-C805-4E73-A734-E42DA8788E85}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D8503B20-9DA3-434E-9437-F5DA5C21459A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeManagement.Identity", "src\EmployeeManagement.Identity\EmployeeManagement.Identity.csproj", "{EDAB654C-38BC-4322-9EAB-C74B6B4A83A6}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDAB654C-38BC-4322-9EAB-C74B6B4A83A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDAB654C-38BC-4322-9EAB-C74B6B4A83A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDAB654C-38BC-4322-9EAB-C74B6B4A83A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDAB654C-38BC-4322-9EAB-C74B6B4A83A6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EDAB654C-38BC-4322-9EAB-C74B6B4A83A6} = {65F6EA9E-C805-4E73-A734-E42DA8788E85}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {027DF9E1-DDFD-46E9-91FE-EB0D82E0B323}
