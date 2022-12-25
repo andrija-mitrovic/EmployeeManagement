@@ -11,13 +11,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagement.Identity
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagement.Client", "src\EmployeeManagement.Client\EmployeeManagement.Client.csproj", "{2D7C102B-6A91-46A8-8814-A6C044CF229E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeManagement.API", "src\EmployeeManagement.API\EmployeeManagement.API.csproj", "{AFDF2BDA-81C9-4575-9080-A892981E05FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagement.API", "src\EmployeeManagement.API\EmployeeManagement.API.csproj", "{AFDF2BDA-81C9-4575-9080-A892981E05FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeManagement.Domain", "src\EmployeeManagement.Domain\EmployeeManagement.Domain.csproj", "{3F1FA552-E071-4483-ADCE-5BFA11107E70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagement.Domain", "src\EmployeeManagement.Domain\EmployeeManagement.Domain.csproj", "{3F1FA552-E071-4483-ADCE-5BFA11107E70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeManagement.Infrastructure", "src\EmployeeManagement.Infrastructure\EmployeeManagement.Infrastructure.csproj", "{09E50537-56A3-4F19-AFC9-D2A82111C33E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagement.Infrastructure", "src\EmployeeManagement.Infrastructure\EmployeeManagement.Infrastructure.csproj", "{09E50537-56A3-4F19-AFC9-D2A82111C33E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeManagement.Application", "src\EmployeeManagement.Application\EmployeeManagement.Application.csproj", "{1B06783E-417F-4558-83D9-CEA405984EF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagement.Application", "src\EmployeeManagement.Application\EmployeeManagement.Application.csproj", "{1B06783E-417F-4558-83D9-CEA405984EF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeManagement.Application.UnitTests", "tests\EmployeeManagement.Application.UnitTests\EmployeeManagement.Application.UnitTests.csproj", "{CEC75CBD-5D9E-4F4C-833D-14587DC2C8F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{1B06783E-417F-4558-83D9-CEA405984EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B06783E-417F-4558-83D9-CEA405984EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B06783E-417F-4558-83D9-CEA405984EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEC75CBD-5D9E-4F4C-833D-14587DC2C8F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEC75CBD-5D9E-4F4C-833D-14587DC2C8F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEC75CBD-5D9E-4F4C-833D-14587DC2C8F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEC75CBD-5D9E-4F4C-833D-14587DC2C8F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{3F1FA552-E071-4483-ADCE-5BFA11107E70} = {65F6EA9E-C805-4E73-A734-E42DA8788E85}
 		{09E50537-56A3-4F19-AFC9-D2A82111C33E} = {65F6EA9E-C805-4E73-A734-E42DA8788E85}
 		{1B06783E-417F-4558-83D9-CEA405984EF7} = {65F6EA9E-C805-4E73-A734-E42DA8788E85}
+		{CEC75CBD-5D9E-4F4C-833D-14587DC2C8F4} = {D8503B20-9DA3-434E-9437-F5DA5C21459A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {027DF9E1-DDFD-46E9-91FE-EB0D82E0B323}
