@@ -1,4 +1,4 @@
-﻿using EmployeeManagement.Application.Common.Exceptions;
+﻿using EmployeeManagement.Application.Common.Helpers;
 using System.Text.Json;
 
 namespace EmployeeManagement.API.Middlewares
@@ -29,21 +29,11 @@ namespace EmployeeManagement.API.Middlewares
         {
             context.Response.ContentType = "application/json";
 
-            context.Response.StatusCode = exception switch
-            {
-                ValidationException => StatusCodes.Status400BadRequest,
-                ForbiddenAccessException => StatusCodes.Status403Forbidden,
-                NotFoundException => StatusCodes.Status404NotFound,
-                _ => StatusCodes.Status500InternalServerError
-            };
+            var problem = ProblemDetailsGenerator.Generate(exception);
 
-            var response = new
-            {
-                statusCode = context.Response.StatusCode,
-                error = exception.Message
-            };
+            string json = JsonSerializer.Serialize(problem);
 
-            await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+            await context.Response.WriteAsync(json);
         }
     }
 }
