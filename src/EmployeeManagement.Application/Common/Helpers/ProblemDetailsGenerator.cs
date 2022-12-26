@@ -11,15 +11,15 @@ namespace EmployeeManagement.Application.Common.Helpers
         {
             return exception switch
             {
-                ValidationException => GenerateProblemDetailsFor400BadRequest(exception),
-                NotFoundException => GenerateProblemDetailsFor404NotFound(exception),
-                UnauthorizedAccessException => GenerateProblemDetailsFor401Unauthorized(exception),
-                ForbiddenAccessException => GenerateProblemDetailsFor403Forbidden(exception),
-                _ => GenerateProblemDetailsFor500InternalServerError(exception)
+                ValidationException => GenerateProblemDetailsWithStatus400BadRequest(exception),
+                NotFoundException => GenerateProblemDetailsWithStatus404NotFound(exception),
+                UnauthorizedAccessException => GenerateProblemDetailsWithStatus401Unauthorized(exception),
+                ForbiddenAccessException => GenerateProblemDetailsWithStatus403Forbidden(exception),
+                _ => GenerateProblemDetailsWithStatus500InternalServerError(exception)
             };
         }
 
-        private static ProblemDetails GenerateProblemDetailsFor400BadRequest(Exception exception) =>
+        private static ProblemDetails GenerateProblemDetailsWithStatus400BadRequest(Exception exception) =>
             new()
             {
                 Status = StatusCodes.Status400BadRequest,
@@ -28,16 +28,7 @@ namespace EmployeeManagement.Application.Common.Helpers
                 Detail = exception.Message
             };
 
-        private static ProblemDetails GenerateProblemDetailsFor500InternalServerError(Exception exception) =>
-            new()
-            {
-                Status = StatusCodes.Status500InternalServerError,
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1",
-                Title = "Internal Server Error",
-                Detail = exception.Message
-            };
-
-        private static ProblemDetails GenerateProblemDetailsFor404NotFound(Exception exception) =>
+        private static ProblemDetails GenerateProblemDetailsWithStatus404NotFound(Exception exception) =>
             new()
             {
                 Status = StatusCodes.Status404NotFound,
@@ -46,7 +37,7 @@ namespace EmployeeManagement.Application.Common.Helpers
                 Detail = exception.Message
             };
 
-        private static ProblemDetails GenerateProblemDetailsFor401Unauthorized(Exception exception) =>
+        private static ProblemDetails GenerateProblemDetailsWithStatus401Unauthorized(Exception exception) =>
             new()
             {
                 Status = StatusCodes.Status401Unauthorized,
@@ -54,12 +45,21 @@ namespace EmployeeManagement.Application.Common.Helpers
                 Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
             };
 
-        private static ProblemDetails GenerateProblemDetailsFor403Forbidden(Exception ex) =>
+        private static ProblemDetails GenerateProblemDetailsWithStatus403Forbidden(Exception ex) =>
             new()
             {
                 Status = StatusCodes.Status403Forbidden,
                 Title = "Forbidden",
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3"
+            };
+
+        private static ProblemDetails GenerateProblemDetailsWithStatus500InternalServerError(Exception exception) =>
+            new()
+            {
+                Status = StatusCodes.Status500InternalServerError,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                Title = "Internal Server Error",
+                Detail = exception.Message
             };
     }
 }
