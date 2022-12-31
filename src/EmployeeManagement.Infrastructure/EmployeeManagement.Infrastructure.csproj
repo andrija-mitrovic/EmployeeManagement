@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -15,4 +15,9 @@
     <ProjectReference Include="..\EmployeeManagement.Application\EmployeeManagement.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+  	 <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  		<_Parameter1>EmployeeManagement.Application.IntegrationTests</_Parameter1>
+  	 </AssemblyAttribute>
+  </ItemGroup>
 </Project>
