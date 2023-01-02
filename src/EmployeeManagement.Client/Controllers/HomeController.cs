@@ -1,4 +1,5 @@
 ﻿using EmployeeManagement.Client.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.Json;
@@ -14,6 +15,7 @@ namespace EmployeeManagement.Client.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
+        [Authorize]
         public async Task<IActionResult> Employees()
         {
             var httpClient = _httpClientFactory.CreateClient("APIClient");

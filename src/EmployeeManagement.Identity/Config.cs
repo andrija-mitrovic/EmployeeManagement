@@ -44,7 +44,7 @@ namespace EmployeeManagement.Identity
                         new Secret("secret".Sha512())
                     },
                     RequirePkce = false,
-                    RequireConsent = true
+                    RequireConsent = true,
                 }
             };
     }
