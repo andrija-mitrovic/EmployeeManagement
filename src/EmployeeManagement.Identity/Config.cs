@@ -34,6 +34,7 @@ namespace EmployeeManagement.Identity
                     ClientId = "employeemanagementclient",
                     AllowedGrantTypes = GrantTypes.Code,
                     RedirectUris = new List<string> { "https://localhost:5010/signin-oidc" },
+                    PostLogoutRedirectUris = new List<string> { "https://localhost:5010/signout-callback-oidc" },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -43,8 +44,9 @@ namespace EmployeeManagement.Identity
                     {
                         new Secret("secret".Sha512())
                     },
-                    RequirePkce = false,
+                    RequirePkce = true,
                     RequireConsent = true,
+                    ClientUri = "https://localhost:5010"
                 }
             };
     }

@@ -98,7 +98,7 @@ namespace IdentityServerHost.Quickstart.UI
                         return this.LoadingPage("Redirect", model.ReturnUrl);
                     }
 
-                    return Redirect(model.ReturnUrl);
+                    return Redirect(context.Client.ClientUri);
                 }
                 else
                 {
