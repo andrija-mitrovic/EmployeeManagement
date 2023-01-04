@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.Net.Http.Headers;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
+
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -29,6 +33,8 @@ builder.Services.AddAuthentication(opt =>
     opt.SaveTokens = true;
     opt.ClientSecret = "secret";
     opt.GetClaimsFromUserInfoEndpoint = true;
+    opt.ClaimActions.DeleteClaim("sid");
+    opt.ClaimActions.DeleteClaim("idp");
 });
 
 var app = builder.Build();
