@@ -14,7 +14,8 @@ namespace EmployeeManagement.Identity
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResources.Address(),
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
@@ -39,6 +40,7 @@ namespace EmployeeManagement.Identity
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile, 
+                        IdentityServerConstants.StandardScopes.Address
                     },
                     ClientSecrets =
                     {

@@ -35,6 +35,8 @@ builder.Services.AddAuthentication(opt =>
     opt.GetClaimsFromUserInfoEndpoint = true;
     opt.ClaimActions.DeleteClaim("sid");
     opt.ClaimActions.DeleteClaim("idp");
+    opt.Scope.Add("address");
+    opt.ClaimActions.MapUniqueJsonKey("address", "address");
 });
 
 var app = builder.Build();
