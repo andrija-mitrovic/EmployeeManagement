@@ -19,6 +19,13 @@ builder.Services.AddHttpClient("APIClient", client =>
     client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
 });
 
+builder.Services.AddHttpClient("IDPClient", client => 
+{ 
+    client.BaseAddress = new Uri("https://localhost:5005/");
+    client.DefaultRequestHeaders.Clear();
+    client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json"); 
+});
+
 builder.Services.AddAuthentication(opt =>
 {
     opt.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -36,7 +43,7 @@ builder.Services.AddAuthentication(opt =>
     opt.ClaimActions.DeleteClaim("sid");
     opt.ClaimActions.DeleteClaim("idp");
     opt.Scope.Add("address");
-    opt.ClaimActions.MapUniqueJsonKey("address", "address");
+    //opt.ClaimActions.MapUniqueJsonKey("address", "address");
 });
 
 var app = builder.Build();
