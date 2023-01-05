@@ -16,6 +16,7 @@ namespace EmployeeManagement.Identity
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResources.Address(),
+                new IdentityResource("roles", "User role(s)", new List<string>{"role"})
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
@@ -40,7 +41,8 @@ namespace EmployeeManagement.Identity
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile, 
-                        IdentityServerConstants.StandardScopes.Address
+                        IdentityServerConstants.StandardScopes.Address,
+                        "roles"
                     },
                     ClientSecrets =
                     {
