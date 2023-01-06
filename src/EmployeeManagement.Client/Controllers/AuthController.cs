@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagement.Client.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class AuthController : Controller
     {
         public IActionResult Login()
@@ -18,6 +16,11 @@ namespace EmployeeManagement.Client.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+        }
+
+        public IActionResult AccessDenied() 
+        { 
+            return View(); 
         }
     }
 }

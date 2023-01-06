@@ -40,6 +40,7 @@ namespace EmployeeManagement.Client.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Privacy()
         {
             var idpClient = _httpClientFactory.CreateClient("IDPClient"); 
