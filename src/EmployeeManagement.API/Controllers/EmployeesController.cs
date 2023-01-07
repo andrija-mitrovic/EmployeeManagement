@@ -4,6 +4,7 @@ using EmployeeManagement.Application.Employees.Commands.DeleteEmployee;
 using EmployeeManagement.Application.Employees.Commands.UpdateEmployee;
 using EmployeeManagement.Application.Employees.Queries.GetEmployeeById;
 using EmployeeManagement.Application.Employees.Queries.GetEmployeesWithPagination;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagement.API.Controllers
@@ -11,6 +12,7 @@ namespace EmployeeManagement.API.Controllers
     public sealed class EmployeesController : ApiControllerBase
     {
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<List<EmployeeDto>>> GetProductsWithPagination([FromQuery] GetEmployeesWithPaginationQuery query, CancellationToken cancellationToken)
         {
             var products = await Mediator.Send(query, cancellationToken);

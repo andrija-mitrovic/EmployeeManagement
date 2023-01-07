@@ -8,18 +8,20 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ConfigureServices
     {
-        private const string SWAGGER_BEARER = "Bearer";
-        private const string SWAGGER_SCHEME = "oauth2";
+        private const string BEARER = "Bearer";
+        private const string SCHEME = "oauth2";
         private const string SWAGGER_AUTHORIZATION = "Authorization";
         private const string SWAGGER_DESCRIPTION = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
                                                      Enter 'Bearer' [space] and then your token in the text input below.
                                                      \r\n\r\nExample: 'Bearer 12345abcdef'";
+        private const string IDENTITY_URI = "https://localhost:5005";
 
         public static void AddAPIServices(this IServiceCollection services)
         {
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            services.ConfigureAuthenticationHandler();
             services.AddServices();
             services.AddHttpContext();
             services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
@@ -42,8 +44,12 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddSwaggerGen(option =>
             {
-                option.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-                option.AddSecurityDefinition(SWAGGER_BEARER, GenerateOpenApiSecurityScheme());
+                option.SwaggerDoc("v1", new OpenApiInfo 
+                { 
+                    Title = "API", 
+                    Version = "v1" 
+                });
+                option.AddSecurityDefinition(BEARER, GenerateOpenApiSecurityScheme());
                 option.AddSecurityRequirement(GenerateOpenApiSecurityRequirement());
             });
         }
@@ -58,10 +64,10 @@ namespace Microsoft.Extensions.DependencyInjection
                         Reference = new OpenApiReference
                         {
                             Type = ReferenceType.SecurityScheme,
-                            Id = SWAGGER_BEARER
+                            Id = BEARER
                         },
-                        Scheme = SWAGGER_SCHEME,
-                        Name = SWAGGER_BEARER,
+                        Scheme = SCHEME,
+                        Name = BEARER,
                         In = ParameterLocation.Header,
 
                     },
@@ -78,8 +84,15 @@ namespace Microsoft.Extensions.DependencyInjection
                 Name = SWAGGER_AUTHORIZATION,
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
-                Scheme = SWAGGER_BEARER
+                Scheme = BEARER
             };
         }
+
+        private static void ConfigureAuthenticationHandler(this IServiceCollection services) =>
+            services.AddAuthentication(BEARER).AddJwtBearer(BEARER, options =>
+            {
+                options.Authority = IDENTITY_URI;
+                options.Audience = "employeemanagementapi";
+            });
     }
 }

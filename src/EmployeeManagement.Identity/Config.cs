@@ -21,11 +21,18 @@ namespace EmployeeManagement.Identity
 
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
-            { };
+            {
+                new ApiResource("employeemanagementapi", "EmployeeManagement API")
+                {
+                    Scopes = { "employeemanagementapi.scope" }
+                }
+            };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
-            { };
+            {
+                new ApiScope("employeemanagementapi.scope", "EmployeeManagement API Scope")
+            };
 
         public static IEnumerable<Client> Clients =>
             new Client[]
@@ -42,7 +49,8 @@ namespace EmployeeManagement.Identity
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile, 
                         IdentityServerConstants.StandardScopes.Address,
-                        "roles"
+                        "roles",
+                        "employeemanagementapi.scope"
                     },
                     ClientSecrets =
                     {

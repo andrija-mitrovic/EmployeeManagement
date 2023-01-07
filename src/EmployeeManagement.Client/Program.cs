@@ -51,6 +51,7 @@ builder.Services.AddAuthentication(opt =>
     //opt.ClaimActions.MapUniqueJsonKey("address", "address");
     opt.Scope.Add("roles");
     opt.ClaimActions.MapUniqueJsonKey("role", "role");
+    opt.Scope.Add("employeemanagementapi.scope");
     opt.TokenValidationParameters = new TokenValidationParameters 
     { 
         RoleClaimType = JwtClaimTypes.Role 
