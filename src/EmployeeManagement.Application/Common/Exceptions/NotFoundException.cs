@@ -1,23 +1,23 @@
 ﻿namespace EmployeeManagement.Application.Common.Exceptions
 {
-    public sealed class NotFoundException : Exception
+    public abstract class NotFoundException : Exception
     {
-        public NotFoundException()
+        protected NotFoundException()
         : base()
         {
         }
 
-        public NotFoundException(string message)
+        protected NotFoundException(string message)
             : base(message)
         {
         }
 
-        public NotFoundException(string message, Exception innerException)
+        protected NotFoundException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
-        public NotFoundException(string name, object key)
+        protected NotFoundException(string name, object key)
             : base($"Entity \"{name}\" ({key}) was not found.")
         {
         }
