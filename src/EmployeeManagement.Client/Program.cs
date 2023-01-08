@@ -1,3 +1,4 @@
+using EmployeeManagement.Client.Handlers;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -14,12 +15,15 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddHttpContextAccessor(); 
+builder.Services.AddTransient<BearerTokenHandler>();
+
 builder.Services.AddHttpClient("APIClient", client => 
 { 
     client.BaseAddress = new Uri("https://localhost:5001/"); 
     client.DefaultRequestHeaders.Clear(); 
     client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
-});
+}).AddHttpMessageHandler<BearerTokenHandler>(); 
 
 builder.Services.AddHttpClient("IDPClient", client => 
 { 

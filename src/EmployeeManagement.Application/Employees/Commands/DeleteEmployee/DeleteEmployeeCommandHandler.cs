@@ -29,7 +29,7 @@ namespace EmployeeManagement.Application.Employees.Commands.DeleteEmployee
             if (employee == null)
             {
                 _logger.LogError(nameof(Employee) + " with Id: {EmployeeId} was not found.", request.Id);
-                throw new NotFoundException(nameof(Employee), request.Id);
+                throw new EmployeeNotFoundException(request.Id);
             }
 
             _employeeRepository.Delete(employee);
