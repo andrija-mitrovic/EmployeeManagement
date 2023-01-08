@@ -26,13 +26,19 @@ namespace EmployeeManagement.Client.Controllers
 
             var response = await httpClient.GetAsync("api/employees").ConfigureAwait(false);
 
-            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                var companiesString = await response.Content.ReadAsStringAsync();
+                var companies = JsonSerializer.Deserialize<List<EmployeeViewModel>>(companiesString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            var employeesString = await response.Content.ReadAsStringAsync();
-            var employees = JsonSerializer.Deserialize<List<EmployeeViewModel>>(employeesString, 
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return View(companies);
+            }
+            else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                return RedirectToAction("AccessDenied", "Auth");
+            }
 
-            return View(employees);
+            throw new Exception("There is a problem accessing the API.");
         }
 
         public IActionResult Index()
