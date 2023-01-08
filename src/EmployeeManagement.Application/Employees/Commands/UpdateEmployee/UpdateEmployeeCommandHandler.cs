@@ -33,7 +33,7 @@ namespace EmployeeManagement.Application.Employees.Commands.UpdateEmployee
             if (employee == null)
             {
                 _logger.LogError(nameof(Employee) + " with Id: {ProductId} was not found.", request.Id);
-                throw new NotFoundException(nameof(Employee), request.Id);
+                throw new EmployeeNotFoundException(request.Id);
             }
 
             _mapper.Map(request, employee);
