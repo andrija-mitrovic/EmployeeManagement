@@ -6,11 +6,6 @@ using EmployeeManagement.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EmployeeManagement.Application.Employees.Queries.GetEmployeeById
 {
@@ -37,7 +32,7 @@ namespace EmployeeManagement.Application.Employees.Queries.GetEmployeeById
             if (employee == null)
             {
                 _logger.LogError(nameof(Employee) + " with Id: {EmployeeId} was not found.", request.Id);
-                throw new NotFoundException(nameof(Employee), request.Id);
+                throw new EmployeeNotFoundException(request.Id);
             }
 
             return _mapper.Map<EmployeeDto>(employee);
