@@ -72,6 +72,7 @@ builder.Services.AddAuthentication(opt =>
     };
     opt.Scope.Add("country");
     opt.ClaimActions.MapUniqueJsonKey("country", "country");
+    opt.Scope.Add("offline_access");
 });
 
 var app = builder.Build();

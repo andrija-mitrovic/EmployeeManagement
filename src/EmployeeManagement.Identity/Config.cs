@@ -61,7 +61,10 @@ namespace EmployeeManagement.Identity
                     },
                     RequirePkce = true,
                     RequireConsent = true,
-                    ClientUri = "https://localhost:5010"
+                    ClientUri = "https://localhost:5010",
+                    AccessTokenLifetime = 120,
+                    AllowOfflineAccess = true,
+                    UpdateAccessTokenClaimsOnRefresh = true
                 }
             };
     }
