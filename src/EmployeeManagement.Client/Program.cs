@@ -12,6 +12,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
+builder.Services.AddAuthorization(authOpt =>
+{
+    authOpt.AddPolicy("CanCreateAndModifyData", policyBuilder =>
+    {
+        policyBuilder.RequireAuthenticatedUser();
+        policyBuilder.RequireRole("role", "Administrator");
+        policyBuilder.RequireClaim("country", "USA");
+    });
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -60,6 +70,8 @@ builder.Services.AddAuthentication(opt =>
     { 
         RoleClaimType = JwtClaimTypes.Role 
     };
+    opt.Scope.Add("country");
+    opt.ClaimActions.MapUniqueJsonKey("country", "country");
 });
 
 var app = builder.Build();

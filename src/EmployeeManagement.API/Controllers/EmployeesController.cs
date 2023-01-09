@@ -12,7 +12,7 @@ namespace EmployeeManagement.API.Controllers
     public sealed class EmployeesController : ApiControllerBase
     {
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<List<EmployeeDto>>> GetProductsWithPagination([FromQuery] GetEmployeesWithPaginationQuery query, CancellationToken cancellationToken)
         {
             var products = await Mediator.Send(query, cancellationToken);

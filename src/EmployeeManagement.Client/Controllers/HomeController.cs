@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Diagnostics;
+using System.Net;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -46,7 +47,7 @@ namespace EmployeeManagement.Client.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Policy = "CanCreateAndModifyData")]
         public async Task<IActionResult> Privacy()
         {
             var idpClient = _httpClientFactory.CreateClient("IDPClient"); 

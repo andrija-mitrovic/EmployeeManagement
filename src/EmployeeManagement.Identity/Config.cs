@@ -16,7 +16,8 @@ namespace EmployeeManagement.Identity
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResources.Address(),
-                new IdentityResource("roles", "User role(s)", new List<string>{"role"})
+                new IdentityResource("roles", "User role(s)", new List<string>{"role"}),
+                new IdentityResource("country", "Your country", new List<string> { "country" })
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
@@ -24,7 +25,8 @@ namespace EmployeeManagement.Identity
             {
                 new ApiResource("employeemanagementapi", "EmployeeManagement API")
                 {
-                    Scopes = { "employeemanagementapi.scope" }
+                    Scopes = { "employeemanagementapi.scope" },
+                    UserClaims = new List<string> { "role" }
                 }
             };
 
@@ -50,7 +52,8 @@ namespace EmployeeManagement.Identity
                         IdentityServerConstants.StandardScopes.Profile, 
                         IdentityServerConstants.StandardScopes.Address,
                         "roles",
-                        "employeemanagementapi.scope"
+                        "employeemanagementapi.scope",
+                        "country"
                     },
                     ClientSecrets =
                     {
