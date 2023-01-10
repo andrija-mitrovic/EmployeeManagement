@@ -5,18 +5,25 @@
 using IdentityServerHost.Quickstart.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace EmployeeManagement.Identity
 {
     public class Startup
     {
         public IWebHostEnvironment Environment { get; }
+        public IConfiguration Configuration { get; set; }
 
-        public Startup(IWebHostEnvironment environment)
+        public Startup(
+            IWebHostEnvironment environment,
+            IConfiguration configuration)
         {
             Environment = environment;
+            Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -24,16 +31,26 @@ namespace EmployeeManagement.Identity
             // uncomment, if you want to add an MVC-based UI
             services.AddControllersWithViews();
 
+            var migrationAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
             var builder = services.AddIdentityServer(options =>
             {
                 // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
                 options.EmitStaticAudienceClaim = true;
             })
-                .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryApiResources(Config.ApiResources)
-                .AddInMemoryClients(Config.Clients)
-                .AddTestUsers(TestUsers.Users);
+            .AddTestUsers(TestUsers.Users)
+            .AddConfigurationStore(opt =>
+            {
+                opt.ConfigureDbContext =
+                    c => c.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection"),
+                        sql => sql.MigrationsAssembly(migrationAssembly));
+            })
+            .AddOperationalStore(opt =>
+            {
+                opt.ConfigureDbContext =
+                    o => o.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection"),
+                        sql => sql.MigrationsAssembly(migrationAssembly));
+            });
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
