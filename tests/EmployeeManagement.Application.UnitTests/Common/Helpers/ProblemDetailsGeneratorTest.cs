@@ -20,7 +20,7 @@ namespace EmployeeManagement.Application.UnitTests.Common.Helpers
         [Fact]
         public void Generate_ShouldReturnProblemDetailsWithStatus404NotFound_WhenRequestIsNotFoundException()
         {
-            var exception = new NotFoundException();
+            var exception = new EmployeeNotFoundException(1);
 
             var result = ProblemDetailsGenerator.Generate(exception);
 
