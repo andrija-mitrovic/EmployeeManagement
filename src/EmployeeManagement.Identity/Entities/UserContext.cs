@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using EmployeeManagement.Identity.Entities.Configuration;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagement.Identity.Entities
@@ -13,6 +14,8 @@ namespace EmployeeManagement.Identity.Entities
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new RoleConfiguration());
         }
     }
 }
