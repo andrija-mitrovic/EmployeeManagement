@@ -47,7 +47,6 @@ namespace EmployeeManagement.Identity
                 // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
                 options.EmitStaticAudienceClaim = true;
             })
-            .AddTestUsers(TestUsers.Users)
             .AddConfigurationStore(opt =>
             {
                 opt.ConfigureDbContext =
