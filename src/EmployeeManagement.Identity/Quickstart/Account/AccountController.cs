@@ -3,6 +3,7 @@
 
 
 using EmployeeManagement.Identity.Entities;
+using EmployeeManagement.Identity.Entities.ViewModels;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;
@@ -52,6 +53,20 @@ namespace IdentityServerHost.Quickstart.UI
             _events = events;
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+        [HttpGet] 
+        public IActionResult Register(string returnUrl) 
+        { 
+            ViewData["ReturnUrl"] = returnUrl; 
+            return View(); 
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] 
+        public IActionResult Register(UserRegistrationModel userModel, string returnUrl) 
+        { 
+            return View(); 
         }
 
         /// <summary>
