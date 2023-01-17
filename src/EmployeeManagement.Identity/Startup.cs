@@ -3,7 +3,6 @@
 
 
 using EmployeeManagement.Identity.Entities;
-using IdentityServerHost.Quickstart.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -20,8 +19,7 @@ namespace EmployeeManagement.Identity
         public IWebHostEnvironment Environment { get; }
         public IConfiguration Configuration { get; set; }
 
-        public Startup(
-            IWebHostEnvironment environment,
+        public Startup(IWebHostEnvironment environment,
             IConfiguration configuration)
         {
             Environment = environment;
@@ -30,17 +28,24 @@ namespace EmployeeManagement.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
+
             // uncomment, if you want to add an MVC-based UI
             services.AddControllersWithViews();
 
             var migrationAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddDbContext<UserContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("IdentitySqlServerConnection"))); 
-            
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<UserContext>()
-                .AddDefaultTokenProviders();
+            services.AddDbContext<UserContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("IdentitySqlServerConnection")));
+
+            services.AddIdentity<User, IdentityRole>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequiredLength = 7;
+                opt.Password.RequireUppercase = false;
+            })
+            .AddEntityFrameworkStores<UserContext>()
+            .AddDefaultTokenProviders();
 
             var builder = services.AddIdentityServer(options =>
             {
@@ -51,13 +56,13 @@ namespace EmployeeManagement.Identity
             {
                 opt.ConfigureDbContext =
                     c => c.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection"),
-                        sql => sql.MigrationsAssembly(migrationAssembly));
+                    sql => sql.MigrationsAssembly(migrationAssembly));
             })
             .AddOperationalStore(opt =>
             {
                 opt.ConfigureDbContext =
                     o => o.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection"),
-                        sql => sql.MigrationsAssembly(migrationAssembly));
+                    sql => sql.MigrationsAssembly(migrationAssembly));
             })
             .AddAspNetIdentity<User>();
 

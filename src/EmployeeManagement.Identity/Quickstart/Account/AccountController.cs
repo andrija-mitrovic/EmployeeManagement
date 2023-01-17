@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using AutoMapper;
 using EmployeeManagement.Identity.Entities;
 using EmployeeManagement.Identity.Entities.ViewModels;
 using IdentityModel;
@@ -18,7 +19,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace IdentityServerHost.Quickstart.UI
@@ -38,6 +41,7 @@ namespace IdentityServerHost.Quickstart.UI
         private readonly IEventService _events;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IMapper _mapper;
 
         public AccountController(
             IIdentityServerInteractionService interaction,
@@ -45,7 +49,8 @@ namespace IdentityServerHost.Quickstart.UI
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
             UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            IMapper mapper)
         {
             _interaction = interaction;
             _clientStore = clientStore;
@@ -53,6 +58,7 @@ namespace IdentityServerHost.Quickstart.UI
             _events = events;
             _userManager = userManager;
             _signInManager = signInManager;
+            _mapper = mapper;
         }
 
         [HttpGet] 
@@ -63,10 +69,39 @@ namespace IdentityServerHost.Quickstart.UI
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] 
-        public IActionResult Register(UserRegistrationModel userModel, string returnUrl) 
-        { 
-            return View(); 
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(UserRegistrationModel userModel, string returnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(userModel);
+            }
+
+            var user = _mapper.Map<User>(userModel);
+
+            var result = await _userManager.CreateAsync(user, userModel.Password);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+
+                return View(userModel);
+            }
+
+            await _userManager.AddToRoleAsync(user, "Visitor");
+            await _userManager.AddClaimsAsync(user, new List<Claim>
+            {
+                new Claim(JwtClaimTypes.GivenName, user.FirstName),
+                new Claim(JwtClaimTypes.FamilyName, user.LastName),
+                new Claim(JwtClaimTypes.Role, "Visitor"),
+                new Claim(JwtClaimTypes.Address, user.Address),
+                new Claim("country", user.Country)
+            });
+
+            return Redirect(returnUrl);
         }
 
         /// <summary>
