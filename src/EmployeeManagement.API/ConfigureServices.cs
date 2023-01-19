@@ -1,5 +1,6 @@
 ﻿using EmployeeManagement.API.Middlewares;
 using EmployeeManagement.API.Services;
+using EmployeeManagement.Application.Common.Helpers;
 using EmployeeManagement.Application.Common.Interfaces;
 using EmployeeManagement.Infrastructure.Persistence;
 using Microsoft.OpenApi.Models;
@@ -18,7 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static void AddAPIServices(this IServiceCollection services)
         {
-            services.AddControllers();
+            services.ConfigureControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.ConfigureAuthenticationHandler();
@@ -26,6 +27,21 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddHttpContext();
             services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
             services.AddCors();
+        }
+
+        private static void ConfigureControllers(this IServiceCollection services)
+        {
+            services.AddControllers(config =>
+            {
+                config.RespectBrowserAcceptHeader = true;
+                config.ReturnHttpNotAcceptable = true;
+            })
+            .AddXmlDataContractSerializerFormatters();
+        }
+
+        private static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder)
+        {
+            return builder.AddMvcOptions(config => config.OutputFormatters.Add(new CsvOutputFormatter()));
         }
 
         private static void AddServices(this IServiceCollection services)
