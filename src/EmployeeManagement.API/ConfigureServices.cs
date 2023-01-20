@@ -36,7 +36,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
             })
-            .AddXmlDataContractSerializerFormatters();
+            .AddXmlDataContractSerializerFormatters()
+            .AddCustomCSVFormatter();
         }
 
         private static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder)
