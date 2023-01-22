@@ -3,6 +3,7 @@ using EmployeeManagement.API.Services;
 using EmployeeManagement.Application.Common.Helpers;
 using EmployeeManagement.Application.Common.Interfaces;
 using EmployeeManagement.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -19,6 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static void AddAPIServices(this IServiceCollection services)
         {
+            services.ConfigureApiBehaviour();
             services.ConfigureControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
@@ -27,6 +29,15 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddHttpContext();
             services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
             services.AddCors();
+        }
+
+        private static void ConfigureApiBehaviour(this IServiceCollection services)
+        {
+            services.Configure<ApiBehaviorOptions>(options => 
+            {
+                // Enable our custom responses from the actions
+                options.SuppressModelStateInvalidFilter = true; 
+            });
         }
 
         private static void ConfigureControllers(this IServiceCollection services)

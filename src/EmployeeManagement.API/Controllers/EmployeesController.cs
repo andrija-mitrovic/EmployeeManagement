@@ -29,6 +29,11 @@ namespace EmployeeManagement.API.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> CreateProduct(CreateEmployeeCommand command, CancellationToken cancellationToken)
         {
+            if (command is null)
+            {
+                return BadRequest(nameof(CreateEmployeeCommand) + " object is null");
+            }
+
             return await Mediator.Send(command, cancellationToken);
         }
 
